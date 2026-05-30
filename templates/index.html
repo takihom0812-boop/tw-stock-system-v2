@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>股票查詢系統</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <h1>股票查詢系統</h1>
+
+        <form method="post" class="search-form">
+            <input
+                type="text"
+                name="symbol"
+                placeholder="請輸入股票代號，例如 AAPL 或 2330.TW"
+                value="{{ request.form.get('symbol', '') }}"
+                required
+            >
+            <button type="submit">查詢</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if stock_data %}
+            <section class="result">
+                <p><strong>股票代號：</strong>{{ stock_data.symbol }}</p>
+                <p><strong>股票名稱：</strong>{{ stock_data.name }}</p>
+                <p><strong>最新股價：</strong>{{ stock_data.price }}</p>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
